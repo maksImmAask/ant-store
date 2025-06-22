@@ -5,8 +5,8 @@ import { useState } from 'react'
 const { TextArea } = Input
 
 type FieldType = {
-  title?: string
-  description?: string
+  title: string
+  description: string
 }
 
 export type TodoItem = {
@@ -49,7 +49,7 @@ function App() {
   }
 
   const handleEditOk = () => {
-    editForm.validateFields().then((values) => {
+    editForm.validateFields().then((values: FieldType) => {
       if (selectedId !== null) {
         update(selectedId, values)
         api.success({ message: 'Todo обновлён' })
@@ -83,8 +83,8 @@ function App() {
           borderRadius: '12px',
           width: '400px',
         }}
-        onFinish={(e) => {
-          add({ ...e, id: todos.length + 1 })
+        onFinish={(e: FieldType) => {
+          add({ ...e, id: Date.now() })
           form.resetFields()
           api.success({ message: 'Your todo success created' })
         }}
@@ -119,11 +119,11 @@ function App() {
         bordered
         dataSource={todos}
         style={{ width: '400px' }}
-        renderItem={(item) => (
+        renderItem={(item: TodoItem, index: number) => (
           <List.Item key={item.id}>
             <Flex gap={10} align="center" style={{ width: '100%' }}>
               <Title level={5} style={{ margin: 0 }}>
-                {item.id + 1}
+                {index + 1}
               </Title>
               -{' '}
               <Title level={4} style={{ margin: 0 }}>
